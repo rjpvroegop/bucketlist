@@ -1,0 +1,5 @@
+<template>
+  <require from="../bucketlist-item/bucketlist-item"></require>
+
+  <bucketlist-item repeat.for="item of bucketlist" bucketitem.bind="item" even.bind="$index % 2 == 1"></bucketlist-item>
+</template>

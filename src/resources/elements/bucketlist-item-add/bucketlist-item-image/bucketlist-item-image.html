@@ -1,0 +1,7 @@
+<template>
+  <div class="bucket-img">
+    <input change.delegate="handleFileSelect($event)" type="file" />
+
+    <img if.bind="image" src="${'data:image/png;base64,' + image}" alt="${title}">
+  </div>
+</template>

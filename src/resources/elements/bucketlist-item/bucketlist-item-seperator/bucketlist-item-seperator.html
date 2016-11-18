@@ -1,0 +1,10 @@
+<template>
+  <div class="bucket-seperator">
+    <div class="separator-line"></div>
+    <button class="remove" click.delegate="removeItem(item.id)" if.bind="deleting">×</button>
+    <button class="edit" click.delegate="editItem(item.id)" if.bind="editing">¿</button>
+    <div class="separator-bubble completed-${item.completed}">
+    </div>
+    <p class="seperator-date">${item.info}</p>
+  </div>
+</template>

@@ -1,0 +1,37 @@
+{
+  "items": [
+    {
+      "title": "Snowboarding",
+
+      "description": "Snowboarden is nauutlijk iets wat je gewoon gedaan moet hebben! Indoor beginnen, om als het leuk genoeg is zo snel mogelijk door te gaan naar de bergen!",
+
+      "image": "snowboard.jpg",
+
+      "completed": true,
+
+      "info": "10-02-2016"
+    },
+    {
+      "title": "Apenheul",
+
+      "description": "In Apenheul loopt meer dan de helft van alle apen los tussen de bezoekers. Met een beetje geluk springt er zelfs eentje op je schouder!",
+
+      "image": "monkey.jpg",
+
+      "completed": false,
+
+      "info": ""
+    },
+    {
+      "title": "Festival",
+
+      "description": "Waar gaan we heen?<br><a href='http://www.festivalinfo.nl/festivals/'>Festival info</a><br><a href='https://www.bol.com/nl/m/voordeel/festivalwinkel/index.html'>Bol.com festival shop</a>",
+
+      "image": "festival.jpg",
+
+      "completed": false,
+
+      "info": ""
+    }
+  ]
+}

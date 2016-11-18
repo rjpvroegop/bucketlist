@@ -1,0 +1,14 @@
+<template>
+  <require from="./bucketlist-item-text/bucketlist-item-text"></require>
+  <require from="./bucketlist-item-seperator/bucketlist-item-seperator"></require>
+  <require from="./bucketlist-item-image/bucketlist-item-image"></require>
+
+  <bucketlist-item-text if.bind="even" item.bind="bucketitem" class="even-${even}"></bucketlist-item-text>
+  <bucketlist-item-image if.bind="!even" item.bind="bucketitem"></bucketlist-item-image>
+
+  <bucketlist-item-seperator item.bind="bucketitem"></bucketlist-item-seperator>
+
+  <bucketlist-item-image if.bind="even" item.bind="bucketitem"></bucketlist-item-image>
+  <bucketlist-item-text if.bind="!even" item.bind="bucketitem" class="even-${even}"></bucketlist-item-text>
+
+</template>

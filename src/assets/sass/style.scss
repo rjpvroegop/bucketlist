@@ -1,0 +1,250 @@
+body {
+  background-color: #f5f5ff;
+  font-family: 'Roboto', sans-serif;
+  min-width: 500px;
+  padding: 0;
+}
+
+a {
+  font-family: 'Raleway', sans-serif;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  height: 100vh;
+  padding: 20px;
+}
+
+wrapper {
+  height: calc(100% - 100px);
+  overflow: auto;
+  align-items: center;
+  position: relative;
+}
+
+bucketlist-item {
+  @media screen and (min-width: 768px) {
+    width: 70%;
+  }
+  display: flex;
+  margin: 0 auto;
+
+  .even-true .pointer {
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 20px solid white;
+    position: absolute;
+    right: -20px;
+    top: 20%;
+  }
+
+  .even-false .pointer {
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-right: 20px solid white;
+    position: absolute;
+    left: -20px;
+    top: 20%;
+  }
+
+  bucketlist-item-text {
+    width: 40%;
+    position: relative;
+
+    .bucket-description {
+      background-color: white;
+      margin: 20px 0;
+      padding: 8px;
+      border-radius: 8px;
+    }
+
+    h1 {
+      background-color: gray;
+      color: white;
+      padding: 5px;
+      font-size: 20px;
+      text-transform: uppercase;
+    }
+  }
+
+  bucketlist-item-image {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+
+      padding: 10px;
+      background-color: white;
+      border-radius: 4px;
+      box-shadow: 0 0 3px 0 #333;
+      transition: transform 0.5s;
+
+      &.left:hover {
+        transform: rotate(3deg);
+      }
+
+      &.right:hover {
+        transform: rotate(-3deg);
+      }
+    }
+  }
+
+  bucketlist-item-seperator {
+    display: block;
+    width: 20%;
+    position: relative;
+
+    .separator-line {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #ddd;
+      width: 5px;
+      height: 100%;
+    }
+
+    .separator-bubble {
+      position: absolute;
+      left: 50%;
+      top: calc(20%);
+      transform: translateX(-50%);
+      width: 40px;
+      height: 40px;
+      background-color: #ff8888;
+      border: 2px solid white;
+      border-radius: 50%;
+
+      ~ .seperator-date {
+        display: none;
+        opacity: 0;
+        transition: opacity 0.5s;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        text-align: center;
+        background-color: white;
+        border-radius: 5px;
+        padding: 5px;
+      }
+
+      &.completed-true {
+        background-color: #009900;
+
+        ~ .seperator-date {
+          display: block;
+
+          &.visible {
+            opacity: 1;
+          }
+
+          input {
+            width: 90px;
+          }
+        }
+
+        &:hover ~ .seperator-date {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+button.add {
+  color: green;
+  left: 50%;
+  bottom: 0;
+  position: fixed;
+  transform: translateX(-50%);
+  font-size: 20px;
+  border-radius: 20%;
+  border: 0;
+  background-color: transparent;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+input.createnew {
+  color: green;
+  left: 50%;
+  bottom: 0;
+  position: absolute;
+  transform: translateX(0);
+  font-size: 20px;
+  border-radius: 20%;
+  border: 0;
+  background-color: transparent;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+button.cancel {
+  color: red;
+  left: 50%;
+  bottom: 0;
+  position: absolute;
+  transform: translateX(-100%);
+  font-size: 20px;
+  border-radius: 20%;
+  border: 0;
+  background-color: transparent;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+button.remove {
+  color: red;
+  left: 50%;
+  top: 10%;
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 20px;
+  border-radius: 20%;
+  border: 0;
+  background-color: transparent;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+button.edit {
+  color: green;
+  left: 50%;
+  top: 0%;
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 20px;
+  border-radius: 20%;
+  border: 0;
+  background-color: transparent;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.footer {
+  margin-top: 20px;
+  height: 80px;
+}

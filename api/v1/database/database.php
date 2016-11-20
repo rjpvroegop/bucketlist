@@ -1,15 +1,15 @@
 <?php
 class Database
 {
-//    private static $dbName = 'vroegop_pro_bucketl' ;
-//    private static $dbHost = 'localhost' ;
-//    private static $dbUsername = 'vroe_pro_bucketl';
-//    private static $dbUserPassword = 'mmuqtptgvb9492A7bucketlist';
-
-    private static $dbName = 'bucketlist' ;
+    private static $dbName = 'vroegop_pro_bucketl' ;
     private static $dbHost = 'localhost' ;
-    private static $dbUsername = 'root';
-    private static $dbUserPassword = 'tester';
+    private static $dbUsername = 'vroe_pro_bucketl';
+    private static $dbUserPassword = 'mmuqtptgvb9492A7bucketlist';
+
+//    private static $dbName = 'bucketlist' ;
+//    private static $dbHost = 'localhost' ;
+//    private static $dbUsername = 'root';
+//    private static $dbUserPassword = 'tester';
 
     private static $cont  = null;
 

@@ -45,6 +45,28 @@ class BucketlistController
         return $list;
     }
 
+    function fetchIdList()
+    {
+        $sql = 'SELECT id FROM bucketlist';
+        $list = array();
+
+        $pdo = Database::connect();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        foreach ($result as $row) {
+            array_push($list, $row['id']);
+        }
+
+        Database::disconnect();
+
+        return $list;
+    }
+
     function insert($data)
     {
         $sql = "

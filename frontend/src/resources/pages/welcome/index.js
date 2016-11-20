@@ -22,11 +22,11 @@ export class welcome {
 
   getData() {
     return new Promise((resolve, reject)=> {
-      this.http.fetch('/bucketlist/api/v1/bucketlist.php')
+      this.http.fetch('/bucketlist/api/v1/bucketlist.php?list')
         .then(response => response.json())
         .then(data => {
           resolve(data.length == 0 ? this.uploadItem() : data);
-        });
+        })
     })
   }
 

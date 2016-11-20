@@ -255,7 +255,8 @@ System.config({
       "aurelia-framework"
     ],
     "resources/elements/wrapper/wrapper.js": [
-      "aurelia-framework"
+      "aurelia-framework",
+      "aurelia-fetch-client"
     ],
     "resources/pages/edit/edit.js": [
       "aurelia-fetch-client",

@@ -37,6 +37,8 @@ class BucketlistApi
             default:
                 if (isset($path['id'])) {
                     $result = $bucketlist->fetchById($path['id']);
+                } else if (isset($path['list'])){
+                    $result = $bucketlist->fetchIdList();
                 } else {
                     $result = $bucketlist->fetchAll();
                 }

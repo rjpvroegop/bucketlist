@@ -34,13 +34,11 @@ export class ItemRepository {
         return new Promise((resolve, reject) => {
             let bucketlistItem = this.applyModelToDbo(model, new BucketlistItem());
 
-            bucketlistItem.save((err) => {
+            bucketlistItem.save((err, item) => {
                 if (err) {
                     reject(this.databaseError(err));
                 } else {
-                    resolve({
-                        message: 'BucketlistItem created!'
-                    });
+                    resolve(item);
                 }
             });
         });
@@ -61,11 +59,9 @@ export class ItemRepository {
 
                     item.save((err) => {
                         if (err) {
-                            reject(this.databaseError(err));
+                            reject(this.databaseError(err, item));
                         } else {
-                            resolve({
-                                message: 'BucketlistItem updated!'
-                            });
+                            resolve(item);
                         }
                     });
                 }

@@ -9,7 +9,7 @@ export class ItemService {
     async getItems(req, res) {
         try {
             let items = await this.itemRepository.getItems();
-            res.json(items);
+            res.status(200).json(items);
         } catch (err) {
             this.sendError(err, res);
         }
@@ -20,7 +20,7 @@ export class ItemService {
             const id = req.params.item_id;
 
             let item = await this.itemRepository.getItem(id);
-            res.json(item);
+            res.status(200).json(item);
         } catch (err) {
             this.sendError(err, res);
         }
@@ -36,7 +36,7 @@ export class ItemService {
             }
 
             let response = await this.itemRepository.insertItem(model);
-            res.json(response);
+            res.status(201).json({url:this.urlBuilder(req) + response.id});
         } catch (err) {
             this.sendError(err, res);
         }
@@ -47,8 +47,8 @@ export class ItemService {
             const id = req.params.item_id;
             const model = req.body;
 
-            let response = await this.itemRepository.updateItem(id, model);
-            res.json(response);
+            await this.itemRepository.updateItem(id, model);
+            res.status(200).json({url:this.urlBuilder(req)});
         } catch (err) {
             this.sendError(err, res);
         }
@@ -58,8 +58,8 @@ export class ItemService {
         try {
             const id = req.params.item_id;
 
-            let response = await this.itemRepository.deleteItem(id);
-            res.send(response);
+            await this.itemRepository.deleteItem(id);
+            res.status(204).end();
         } catch (err) {
             this.sendError(err, res);
         }
@@ -70,10 +70,18 @@ export class ItemService {
             if (err.databaseError) {
                 res.status(500).send(err);
             } else {
-                res.status(400).send(err);
+                res.status(400).json(err);
             }
         } else {
             res.status(500).end();
         }
+    }
+
+    urlBuilder(req){
+        const protocol = req.protocol + "://";
+        const host = req.get('host');
+        const path = req.originalUrl;
+
+        return protocol + host + path;
     }
 }

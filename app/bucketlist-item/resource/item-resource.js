@@ -11,11 +11,11 @@ export class ItemResource {
 
     setupRoutes() {
         // on routes that end in /bears
-        this.router.route('/items')
+        this.router.route('/v1/items')
             .post((req, res) => this.itemService.insertItem(req, res))
             .get((req, res) => this.itemService.getItems(req, res));
 
-        this.router.route('/items/:item_id')
+        this.router.route('/v1/items/:item_id')
             .get((req, res) => this.itemService.getItem(req, res))
             .put((req, res) => this.itemService.updateItem(req, res))
             .delete((req, res) => this.itemService.deleteItem(req, res))

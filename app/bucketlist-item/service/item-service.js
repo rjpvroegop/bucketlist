@@ -1,15 +1,17 @@
 import {ItemRepository} from "../repository/item-repository";
-import {itemValidation} from '../validation/item-validation';
+import {ItemValidation} from '../validation/item-validation';
+import {Service} from '../../service/service';
 
-export class ItemService {
+export class ItemService extends Service {
     constructor() {
+        super();
         this.itemRepository = new ItemRepository();
     }
 
     async getItems(req, res) {
         try {
-            let items = await this.itemRepository.getItems();
-            res.status(200).json(items);
+            let items = await this.itemRepository.getAll();
+            this.sendOk(res, items, 200);
         } catch (err) {
             this.sendError(err, res);
         }
@@ -19,8 +21,8 @@ export class ItemService {
         try {
             const id = req.params.item_id;
 
-            let item = await this.itemRepository.getItem(id);
-            res.status(200).json(item);
+            let item = await this.itemRepository.getOne(id);
+            this.sendOk(res, item, 200);
         } catch (err) {
             this.sendError(err, res);
         }
@@ -29,14 +31,20 @@ export class ItemService {
     async insertItem(req, res) {
         try {
             const model = req.body;
+            let modelValidationState = ItemValidation.validate(model);
 
-            let modelValidationState = itemValidation(model);
             if (modelValidationState.error) {
                 this.sendError(modelValidationState, res);
+            } else {
+                try {
+                    let item = await this.itemRepository.insertOne(model);
+                    let url = this.urlBuilder(req) + item.id;
+                    let response = {url};
+                    this.sendOk(res, response, 201);
+                } catch (err) {
+                    this.sendError(err, res);
+                }
             }
-
-            let response = await this.itemRepository.insertItem(model);
-            res.status(201).json({url:this.urlBuilder(req) + response.id});
         } catch (err) {
             this.sendError(err, res);
         }
@@ -47,9 +55,13 @@ export class ItemService {
             const id = req.params.item_id;
             const model = req.body;
 
-            await this.itemRepository.updateItem(id, model);
-            res.status(200).json({url:this.urlBuilder(req)});
+            await this.itemRepository.updateOne(model, id);
+            let url = this.urlBuilder(req);
+            let response = {url};
+            console.log('ok');
+            this.sendOk(res, response, 200);
         } catch (err) {
+            console.log('err');
             this.sendError(err, res);
         }
     }
@@ -58,30 +70,10 @@ export class ItemService {
         try {
             const id = req.params.item_id;
 
-            await this.itemRepository.deleteItem(id);
-            res.status(204).end();
+            await this.itemRepository.deleteOne(id);
+            this.sendOk(res, {}, 204);
         } catch (err) {
             this.sendError(err, res);
         }
-    }
-
-    sendError(err, res) {
-        if (err) {
-            if (err.databaseError) {
-                res.status(500).send(err);
-            } else {
-                res.status(400).json(err);
-            }
-        } else {
-            res.status(500).end();
-        }
-    }
-
-    urlBuilder(req){
-        const protocol = req.protocol + "://";
-        const host = req.get('host');
-        const path = req.originalUrl;
-
-        return protocol + host + path;
     }
 }

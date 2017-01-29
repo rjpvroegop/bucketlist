@@ -2,7 +2,6 @@ import {ItemResource} from "../bucketlist-item/resource/item-resource";
 import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
-import livereload from 'connect-livereload';
 
 export class Server {
     constructor() {
@@ -11,16 +10,16 @@ export class Server {
     }
 
     init(){
-        this.router = express.Router();
         this.app = express();
+        this.router = express.Router();
 
-        this.configureRouterMiddleware();
         this.configureApp();
+        this.configureRouterMiddleware();
+
         this.generateResources();
     }
 
     configureApp(){
-        this.app.use(livereload()); // reloads the page on file changes
         this.app.use(morgan('dev')); // log requests to the console
 
         // configure body parser
@@ -31,7 +30,7 @@ export class Server {
 
     configureRouterMiddleware() {
         // middleware to use for all requests
-        // this.router.use(function (req, res, next) {
+        // this.router.use(function (req, res, next ) {
         //     console.log(req.body);
         //     next();
         // });

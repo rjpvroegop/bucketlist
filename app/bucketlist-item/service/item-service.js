@@ -1,17 +1,21 @@
-import {ItemRepository} from "../repository/item-repository";
-import {ItemValidation} from '../validation/item-validation';
 import {Service} from '../../service/service';
+import {ItemRepository} from '../repository/item-repository';
 
 export class ItemService extends Service {
-    constructor() {
-        super();
-        this.itemRepository = new ItemRepository();
-    }
+    itemRepository = new ItemRepository();
 
     async getItems(req, res) {
         try {
-            let items = await this.itemRepository.getAll();
-            this.sendOk(res, items, 200);
+            let offset = req.query['offset'] || 0;
+            let amount = req.query['amount'] || 20;
+
+            let items = await this.itemRepository.find(offset, amount);
+
+            if(items.length > 0) {
+                this.sendOk(res, items, 200);
+            } else {
+                throw new Error("No items found");
+            }
         } catch (err) {
             this.sendError(err, res);
         }
@@ -19,10 +23,13 @@ export class ItemService extends Service {
 
     async getItem(req, res) {
         try {
-            const id = req.params.item_id;
-
-            let item = await this.itemRepository.getOne(id);
-            this.sendOk(res, item, 200);
+            const bucketlistItemId = req.params.item_id;
+            let item = await this.itemRepository.findById(bucketlistItemId);
+            if(item != null) {
+                this.sendOk(res, item, 200);
+            } else {
+                throw new Error("Item not found");
+            }
         } catch (err) {
             this.sendError(err, res);
         }
@@ -30,21 +37,10 @@ export class ItemService extends Service {
 
     async insertItem(req, res) {
         try {
-            const model = req.body;
-            let modelValidationState = ItemValidation.validate(model);
-
-            if (modelValidationState.error) {
-                this.sendError(modelValidationState, res);
-            } else {
-                try {
-                    let item = await this.itemRepository.insertOne(model);
-                    let url = this.urlBuilder(req) + item.id;
-                    let response = {url};
-                    this.sendOk(res, response, 201);
-                } catch (err) {
-                    this.sendError(err, res);
-                }
-            }
+            const bucketlistItem = req.body;
+            let item = await this.itemRepository.create(bucketlistItem);
+            let url = this.urlBuilder(req) + '/' + item.id;
+            this.sendOk(res, {url}, 201);
         } catch (err) {
             this.sendError(err, res);
         }
@@ -52,25 +48,22 @@ export class ItemService extends Service {
 
     async updateItem(req, res) {
         try {
-            const id = req.params.item_id;
-            const model = req.body;
-
-            await this.itemRepository.updateOne(model, id);
+            const bucketlistItemId = req.params.item_id;
+            const bucketlistItem = req.body;
+            await this.itemRepository.findByIdAndUpdate(bucketlistItemId, bucketlistItem);
             let url = this.urlBuilder(req);
             let response = {url};
-            console.log('ok');
             this.sendOk(res, response, 200);
         } catch (err) {
-            console.log('err');
             this.sendError(err, res);
         }
     }
 
     async deleteItem(req, res) {
         try {
-            const id = req.params.item_id;
+            const bucketlistItemId = req.params.item_id;
 
-            await this.itemRepository.deleteOne(id);
+            await this.itemRepository.findByIdAndRemove(bucketlistItemId);
             this.sendOk(res, {}, 204);
         } catch (err) {
             this.sendError(err, res);

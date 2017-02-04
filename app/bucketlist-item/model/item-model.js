@@ -1,20 +1,15 @@
-const mongoose = require('mongoose');
+import {ActivitySchema} from "./activity-model";
+import mongoose from 'mongoose';
+
 const Schema = mongoose.Schema;
 
-const BucketlistItemSchema = new Schema({
+export const BucketlistItemSchema = new Schema({
     title: String,
     description: String,
     completed: {
         date: Date,
         done: Boolean,
-        activities: [
-            {
-                title: String,
-                description: String,
-                image:String,
-                date: Date
-            }
-        ]
+        activities: [ActivitySchema]
     },
     image: String,
 });

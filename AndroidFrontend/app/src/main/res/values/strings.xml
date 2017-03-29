@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AndroidFrontend</string>
+    <string name="navigate_list">Bekijk bucketlist</string>
+    <string name="add_item">Voeg item toe</string>
+</resources>

@@ -101,10 +101,10 @@ class BucketlistController
         Database::disconnect();
 
         $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        $actual_link = substr($actual_link, 0, strpos($actual_link, "?"));
+        $actual_link .= substr($actual_link, 0, strpos($actual_link, "?"));
         $actual_link .= "?id=$lastId";
         http_response_code(201);
-        return $actual_link;
+        return ["url"=>$actual_link];
     }
 
     function update($data)
